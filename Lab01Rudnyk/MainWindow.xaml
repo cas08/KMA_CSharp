@@ -1,0 +1,12 @@
+﻿<Window x:Class="Lab01Rudnyk.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab01Rudnyk" xmlns:localView="clr-namespace:Lab01Rudnyk.View"
+        mc:Ignorable="d"
+        Title="Zodiac Finder" Height="200" Width="400" MinHeight="180" MinWidth="250">
+    <Grid>
+        <localView:DateOfBirthPickerView></localView:DateOfBirthPickerView>
+    </Grid>
+</Window>
