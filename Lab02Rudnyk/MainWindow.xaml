@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab02Rudnyk"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400" MinHeight="250" MinWidth="400">
+        Title="MainWindow" Height="250" Width="400" MinHeight="250" MinWidth="400" IsEnabled="{Binding IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

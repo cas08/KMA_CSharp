@@ -1,4 +1,8 @@
-﻿namespace Lab02Rudnyk.Models
+﻿using System.Net.Mail;
+using System.Text.RegularExpressions;
+using System.Windows;
+
+namespace Lab02Rudnyk.Models
 {
     internal class Person
     {
@@ -9,10 +13,10 @@
         private string _emailAddress;
         private DateTime _dateOfBirth;
 
-        private readonly bool _isAdult;
-        private readonly string _sunSign;
-        private readonly string _chineseSign;
-        private readonly bool _isBirthday;
+        private bool _isAdult;
+        private string _sunSign;
+        private string _chineseSign;
+        private bool _isBirthday;
         #endregion
 
         #region Properties
@@ -45,18 +49,14 @@
 
         #region Constructors
 
+        
+
         public Person(string firstName, string lastName, string emailAddress, DateTime dateOfBirth)
         {
             _firstName = firstName;
             _lastName = lastName;
             _emailAddress = emailAddress;
             _dateOfBirth = dateOfBirth;
-
-            //additional:
-            _isAdult = Task.Run(CalculateIsAdult).Result;
-            _sunSign = Task.Run(CalculateSunSign).Result;
-            _chineseSign = Task.Run(CalculateChineseSign).Result;
-            _isBirthday = Task.Run( CalculateIsBirthday).Result;
 
         }
 
@@ -66,17 +66,37 @@
         public Person(string firstName, string lastName, DateTime dateOfBirth)
             : this(firstName, lastName, string.Empty, dateOfBirth) { }
 
-        
-    #endregion
+
+        #endregion
+
+        public async Task CalculateAdditionalFieldsAsync()
+        {
+            PersonBirthDateValidation();
+            PersonEmailValidation();
+            
+
+            var isAdultTask = Task.Run(() => CalculateIsAdult());
+            var sunSignTask = Task.Run(() => CalculateSunSign());
+            var chineseSignTask = Task.Run(() => CalculateChineseSign());
+            var isBirthdayTask = Task.Run(() => CalculateIsBirthday());
+
+            _isAdult = await isAdultTask;
+            _sunSign = await sunSignTask;
+            _chineseSign = await chineseSignTask;
+            _isBirthday = await isBirthdayTask;
+        }
+
 
         private async Task<bool> CalculateIsAdult()
         {
+            Thread.Sleep(3000);
             DateTime valueToCheck = DateOfBirth.AddYears(18);
             return valueToCheck <= DateTime.Today;
         }
 
         private async Task<string> CalculateSunSign()
         {
+            Thread.Sleep(3000);
             var day = DateOfBirth.Day;
             Month month = (Month)DateOfBirth.Month;
             string westernAstroSign;
@@ -127,6 +147,7 @@
 
         private async Task<string> CalculateChineseSign()
         {
+            Thread.Sleep(3000);
             string chineseZodiacSign;
             switch (DateOfBirth.Year % 12)
             {
@@ -172,7 +193,36 @@
 
         private async Task<bool> CalculateIsBirthday()
         {
+            Thread.Sleep(3000);
             return _dateOfBirth.Month == DateTime.Today.Month && _dateOfBirth.Day == DateTime.Today.Day;
+        }
+        private void PersonEmailValidation()
+        {
+            string pattern = @"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$";
+            if (!Regex.IsMatch(EmailAddress, pattern))
+            {
+                throw new InvalidEmailException();
+            }
+            
+        }
+        private void PersonBirthDateValidation()
+        {
+            if (DateTime.Now < DateOfBirth)
+            {
+                throw new FutureBirthDateException();
+            }
+
+            var today = DateTime.Today;
+
+            var convertedToday = (today.Year * 100 + today.Month) * 100 + today.Day;
+            var convertedBD = (DateOfBirth.Year * 100 + DateOfBirth.Month) * 100 + DateOfBirth.Day;
+
+            int age = (convertedToday - convertedBD) / 10000;
+
+            if (age > 135)
+            {
+                throw new OldBirthDateException();
+            }
         }
     }
 }
