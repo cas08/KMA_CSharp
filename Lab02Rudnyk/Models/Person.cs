@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -66,8 +67,20 @@ namespace Lab02Rudnyk.Models
         public Person(string firstName, string lastName, DateTime dateOfBirth)
             : this(firstName, lastName, string.Empty, dateOfBirth) { }
 
+        public Person() { }
+
+        [JsonConstructor]
+        public Person(bool isAdult, string sunSign, string chineseSign, bool isBirthday)
+        {
+            _isAdult = isAdult;
+            _sunSign = sunSign;
+            _chineseSign = chineseSign;
+            _isBirthday = isBirthday;
+        }
 
         #endregion
+
+
 
         public async Task CalculateAdditionalFieldsAsync()
         {
@@ -89,103 +102,104 @@ namespace Lab02Rudnyk.Models
 
         private async Task<bool> CalculateIsAdult()
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             DateTime valueToCheck = DateOfBirth.AddYears(18);
             return valueToCheck <= DateTime.Today;
         }
 
         private async Task<string> CalculateSunSign()
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             var day = DateOfBirth.Day;
             Month month = (Month)DateOfBirth.Month;
             string westernAstroSign;
             switch (month)
             {
                 case Month.December:
-                    westernAstroSign = (day < 22) ? "Стрілець" : "Козеріг";
+                    westernAstroSign = (day < 22) ? "Sagittarius" : "Capricorn";
                     break;
                 case Month.January:
-                    westernAstroSign = (day < 20) ? "Козеріг" : "Водолій";
+                    westernAstroSign = (day < 20) ? "Capricorn" : "Aquarius";
                     break;
                 case Month.February:
-                    westernAstroSign = (day < 19) ? "Водолій" : "Риби";
+                    westernAstroSign = (day < 19) ? "Aquarius" : "Pisces";
                     break;
                 case Month.March:
-                    westernAstroSign = (day < 21) ? "Риби" : "Овен";
+                    westernAstroSign = (day < 21) ? "Pisces" : "Aries";
                     break;
                 case Month.April:
-                    westernAstroSign = (day < 20) ? "Овен" : "Телець";
+                    westernAstroSign = (day < 20) ? "Aries" : "Taurus";
                     break;
                 case Month.May:
-                    westernAstroSign = (day < 21) ? "Телець" : "Близнюки";
+                    westernAstroSign = (day < 21) ? "Taurus" : "Gemini";
                     break;
                 case Month.June:
-                    westernAstroSign = (day < 21) ? "Близнюки" : "Рак";
+                    westernAstroSign = (day < 21) ? "Gemini" : "Cancer";
                     break;
                 case Month.July:
-                    westernAstroSign = (day < 23) ? "Рак" : "Лев";
+                    westernAstroSign = (day < 23) ? "Cancer" : "Leo";
                     break;
                 case Month.August:
-                    westernAstroSign = (day < 23) ? "Лев" : "Діва";
+                    westernAstroSign = (day < 23) ? "Leo" : "Virgo";
                     break;
                 case Month.September:
-                    westernAstroSign = (day < 23) ? "Діва" : "Терези";
+                    westernAstroSign = (day < 23) ? "Virgo" : "Libra";
                     break;
                 case Month.October:
-                    westernAstroSign = (day < 23) ? "Терези" : "Скорпіон";
+                    westernAstroSign = (day < 23) ? "Libra" : "Scorpio";
                     break;
                 case Month.November:
-                    westernAstroSign = (day < 22) ? "Скорпіон" : "Стрілець";
+                    westernAstroSign = (day < 22) ? "Scorpio" : "Sagittarius";
                     break;
                 default:
                     westernAstroSign = "Invalid";
-                    break;          
+                    break;
             }
             return westernAstroSign;
+
         }
 
         private async Task<string> CalculateChineseSign()
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             string chineseZodiacSign;
             switch (DateOfBirth.Year % 12)
             {
                 case 0:
-                    chineseZodiacSign = "Мавпа";
+                    chineseZodiacSign = "Monkey";
                     break;
                 case 1:
-                    chineseZodiacSign = "Півень";
+                    chineseZodiacSign = "Rooster";
                     break;
                 case 2:
-                    chineseZodiacSign = "Собака";
+                    chineseZodiacSign = "Dog";
                     break;
                 case 3:
-                    chineseZodiacSign = "Свиня";
+                    chineseZodiacSign = "Pig";
                     break;
                 case 4:
-                    chineseZodiacSign = "Пацюк";
+                    chineseZodiacSign = "Rat";
                     break;
                 case 5:
-                    chineseZodiacSign = "Бик";
+                    chineseZodiacSign = "Ox";
                     break;
                 case 6:
-                    chineseZodiacSign = "Тигр";
+                    chineseZodiacSign = "Tiger";
                     break;
                 case 7:
-                    chineseZodiacSign = "Кролик";
+                    chineseZodiacSign = "Rabbit";
                     break;
                 case 8:
-                    chineseZodiacSign = "Дракон";
+                    chineseZodiacSign = "Dragon";
                     break;
                 case 9:
-                    chineseZodiacSign = "Змія";
+                    chineseZodiacSign = "Snake";
                     break;
                 case 10:
-                    chineseZodiacSign = "Кінь";
+                    chineseZodiacSign = "Horse";
                     break;
                 default:
-                    chineseZodiacSign = "Коза";
+                    chineseZodiacSign = "Goat";
                     break;
             }
             return chineseZodiacSign;
@@ -193,7 +207,7 @@ namespace Lab02Rudnyk.Models
 
         private async Task<bool> CalculateIsBirthday()
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             return _dateOfBirth.Month == DateTime.Today.Month && _dateOfBirth.Day == DateTime.Today.Day;
         }
         private void PersonEmailValidation()

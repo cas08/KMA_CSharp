@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab02Rudnyk.Models
 {
-    internal class FutureBirthDateException:Exception
+    internal class FutureBirthDateException : Exception
     {
         public FutureBirthDateException() : base("ERROR: Дата народження в майбутньому.") { }
     }

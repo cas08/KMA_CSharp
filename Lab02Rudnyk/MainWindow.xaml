@@ -4,32 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab02Rudnyk"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400" MinHeight="250" MinWidth="400" IsEnabled="{Binding IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+        Title="MainWindow" Height="800" Width="1000" MinHeight="250" MinWidth="800" IsEnabled="{Binding IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" Text="Fill in all boxes" FontSize="20"></TextBlock>
-        <Label Grid.Row="1" Grid.Column="0" Content="Ім'я:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Name="TBFirstName" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding FirstName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="Прізвище:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Name="TBLastName" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding LastName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Електронна пошта:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Name="TBEmail" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding EmailAddress, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="4" Grid.Column="0" Content="Дата народження:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <DatePicker Name="DPBirthDate" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5" SelectedDate="{Binding DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Name="BProceed" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="55" Content="Proceed" Command="{Binding ProceedCommand}"></Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="500"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Left" Text="Fill in all boxes" FontSize="20" Height="27" Width="128"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Ім'я:" VerticalAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="87,0,0,0" Width="33"/>
+            <TextBox Name="TBFirstName" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding FirstName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="18" Width="250"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Прізвище:" VerticalAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="54,0,0,0" Width="66"/>
+            <TextBox Name="TBLastName" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding LastName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="18" Width="250"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Електронна пошта:" VerticalAlignment="Center" HorizontalAlignment="Left" Height="25" Margin="6,0,0,0" Width="114"/>
+            <TextBox Name="TBEmail" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding EmailAddress, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="17" Width="250"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="Дата народження:" VerticalAlignment="Center" HorizontalAlignment="Left" Height="25" Margin="10,0,0,0" Width="110"/>
+            <DatePicker Name="DPBirthDate" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" SelectedDate="{Binding DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="24" Width="250"/>
+            <Button Name="BProceed" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Content="Add" Command="{Binding ProceedCommand}" Height="20" Margin="10,5,5,5"></Button>
+
+            <Button Name="BEdit" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Content="Edit" Command="{Binding EditCommand}" Height="20" Margin="90,5,5,5"/>
+
+            <Button Name="BDelete" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Content="Delete" Command="{Binding DeleteCommand}" Height="20" Margin="170,5,5,5"/>
+            <ScrollViewer Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+                <DataGrid Name="DGUsers" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" AutoGenerateColumns="True" ItemsSource="{Binding Users, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" SelectionMode="Single"/>
+            </ScrollViewer>
+        </Grid>
+        <fa:ImageAwesome Icon="Refresh" Spin="True" Height="50" Width="50" Visibility="{Binding LoaderVisibility, Mode=OneWay}"></fa:ImageAwesome>
     </Grid>
 </Window>
